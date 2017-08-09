@@ -1,0 +1,1 @@
+sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=MyComplexPassword!234' -p 1433:1433 -v  /user/my/db:/var/opt/mssql -d microsoft/mssql-server
