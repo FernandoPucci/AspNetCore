@@ -1,0 +1,12 @@
+#Add new Tables
+dotnet ef migrations add FeaturesDatabase
+
+#Update Database with new Tables
+dotnet ef database update FeaturesDatabase
+
+#Add Seed New Tables
+dotnet ef migrations SeedFeaturesDatabase
+
+#Update Database with new seeds
+dotnet ef database update SeedFeaturesDatabase
+
