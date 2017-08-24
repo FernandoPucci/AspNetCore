@@ -1,0 +1,8 @@
+Fluent API or Data Annotations? 
+
+How can I validate my model 
+
+Domain Model -> (Domain Classes) - Fluent API (to override ED conventions); e.g.: VegaDbContext.25~28
+
+
+API Resources/View Models -> (ContactResource Classes) - Validations of View Model - Data Annotations (to implement validation)
