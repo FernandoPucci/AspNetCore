@@ -30,7 +30,7 @@ namespace vega.Mapping
                     #region Remove unselected features
                     var removedFeatures = v.Features.Where(f => !vr.Features.Contains(f.FeatureId));
 
-                    foreach (var f in removedFeatures)
+                    foreach (var f in removedFeatures.ToList())
                     {
                         v.Features.Remove(f);
                     }

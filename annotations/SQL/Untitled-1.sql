@@ -4,4 +4,4 @@ SELECT * from makes;
 SELECT * from models;
 
 
-SELECT * from vehicleFeatures;
+SELECT * from vehicleFeatures order by VehicleId;
