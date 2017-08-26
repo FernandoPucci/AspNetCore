@@ -22,7 +22,7 @@ namespace vega.Models
 
         public Model Model { get; set; }
 
-        public bool IsRegister { get; set; }
+        public bool IsRegistered { get; set; }
 
         [Required]
         [StringLength(255)]
