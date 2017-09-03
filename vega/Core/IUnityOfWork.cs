@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
 
-namespace vega.Persistence
-{
-    public interface IUnityOfWork
+namespace vega.Core
+{    public interface IUnityOfWork
     {
         Task CompleteAsync();
     }

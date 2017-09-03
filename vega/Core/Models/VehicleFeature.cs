@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace vega.Models
+namespace vega.Core.Models
 {
     /// <summary>
     /// Many-to-many mapper relationship
