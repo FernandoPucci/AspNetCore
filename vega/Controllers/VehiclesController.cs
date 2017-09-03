@@ -22,7 +22,6 @@ namespace vega.Controllers
             this.unityOfWork = unityOfWork;
             this.repository = repository;            
             this.mapper = mapper;
-
         }
 
         [HttpPost]
