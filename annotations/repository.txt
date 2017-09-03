@@ -1,1 +1,10 @@
 http://bit.ly/repo-vs-query 
+
+Repository shoudn't return IQueryble, because some method, some where can change properties of the object. 
+
+Repository don't have a Save method. Because in transactionals operations, we can make mistakes, saving a child object
+ whithout his master or may using many repositories;
+    To avoid this problems, we'll implement "Unit of Work" pattern. UoW walks hand-to-hand with Repository pattern.
+    
+
+    "Separete what's change and what doesn't"

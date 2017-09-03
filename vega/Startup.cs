@@ -33,7 +33,8 @@ namespace WebApplicationBasic
         {
             //dependency injection - register interface as 'scoped'
             services.AddScoped<IVehicleRepository,VehicleRepository>(); 
-            
+            services.AddScoped<IUnityOfWork, UnitOfWork>();
+
             services.AddAutoMapper();
             services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
             // Add framework services.

@@ -13,14 +13,14 @@ namespace vega.Controllers
     public class VehiclesController : Controller
     {
 
-        private readonly IMapper mapper;
-        private readonly VegaDbContext context;
+        private readonly IMapper mapper;                
         private readonly IVehicleRepository repository;
+        private readonly IUnityOfWork unityOfWork;
 
-        public VehiclesController(IMapper mapper, VegaDbContext context, IVehicleRepository repository)
+        public VehiclesController(IMapper mapper, IVehicleRepository repository, IUnityOfWork unityOfWork)
         {
-            this.repository = repository;
-            this.context = context;
+            this.unityOfWork = unityOfWork;
+            this.repository = repository;            
             this.mapper = mapper;
 
         }
@@ -36,7 +36,7 @@ namespace vega.Controllers
 
             //IMPLEMENTING FRIENDLY MESSAGE FOR MODEL STATE ERRORS
             //check if this model exists
-            var model = await context.Models.FindAsync(saveVehicleResource.ModelId);
+            var model = await repository.GetVehicle(saveVehicleResource.ModelId, includeRelated: false);
 
             //Business Rules Validations
             if (model == null)
@@ -46,7 +46,7 @@ namespace vega.Controllers
                 return BadRequest(ModelState);
 
             }
-
+            repository.GetVehicle(saveVehicleResource.ModelId, false);
             // ### NOT IMPLEMENTED YET!
             //
             //Business Rules Validations
@@ -58,9 +58,9 @@ namespace vega.Controllers
             var vehicle = mapper.Map<SaveVehicleResource, Vehicle>(saveVehicleResource);
 
             vehicle.LastUpdate = DateTime.Now;
-             
+
             repository.Add(vehicle);
-            await context.SaveChangesAsync();
+            await unityOfWork.CompleteAsync();
 
             vehicle = await repository.GetVehicle(vehicle.Id);
 
@@ -89,7 +89,7 @@ namespace vega.Controllers
 
             vehicle.LastUpdate = DateTime.Now;
 
-            await context.SaveChangesAsync();
+            await unityOfWork.CompleteAsync();
 
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
             return Ok(result);
@@ -108,7 +108,7 @@ namespace vega.Controllers
             }
             repository.Remove(vehicle);
 
-            await context.SaveChangesAsync();
+            await unityOfWork.CompleteAsync();
 
             return NoContent();
 

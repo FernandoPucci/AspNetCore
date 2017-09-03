@@ -30,12 +30,6 @@ namespace vega.Persistence
             }
         }
 
-        // public async Task<Vehicle> GetVehicleWithMake(int id)
-        // {
-
-
-        // }
-
         public void Add(Vehicle vehicle)
         {
             context.Vehicles.Add(vehicle);
