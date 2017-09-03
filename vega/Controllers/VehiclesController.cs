@@ -13,14 +13,14 @@ namespace vega.Controllers
     public class VehiclesController : Controller
     {
 
-        private readonly IMapper mapper;                
+        private readonly IMapper mapper;
         private readonly IVehicleRepository repository;
         private readonly IUnityOfWork unityOfWork;
 
         public VehiclesController(IMapper mapper, IVehicleRepository repository, IUnityOfWork unityOfWork)
         {
             this.unityOfWork = unityOfWork;
-            this.repository = repository;            
+            this.repository = repository;
             this.mapper = mapper;
         }
 
@@ -32,33 +32,13 @@ namespace vega.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            //IMPLEMENTING FRIENDLY MESSAGE FOR MODEL STATE ERRORS
-            //check if this model exists
-            var model = await repository.GetVehicle(saveVehicleResource.ModelId, includeRelated: false);
-
-            //Business Rules Validations
-            if (model == null)
-            {
-
-                ModelState.AddModelError("ModelId", "Invalid ModelId");
-                return BadRequest(ModelState);
-
-            }
-            repository.GetVehicle(saveVehicleResource.ModelId, false);
-            // ### NOT IMPLEMENTED YET!
-            //
-            //Business Rules Validations
-            // if(true){SaveVehicleResource
-            //     ModelState.AddModelError("....error", "error");
-            //     return BadRequest(ModelState);
-            // }
-
+         
             var vehicle = mapper.Map<SaveVehicleResource, Vehicle>(saveVehicleResource);
 
             vehicle.LastUpdate = DateTime.Now;
 
             repository.Add(vehicle);
+
             await unityOfWork.CompleteAsync();
 
             vehicle = await repository.GetVehicle(vehicle.Id);
@@ -89,6 +69,8 @@ namespace vega.Controllers
             vehicle.LastUpdate = DateTime.Now;
 
             await unityOfWork.CompleteAsync();
+
+            vehicle = await repository.GetVehicle(vehicle.Id);
 
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
             return Ok(result);
