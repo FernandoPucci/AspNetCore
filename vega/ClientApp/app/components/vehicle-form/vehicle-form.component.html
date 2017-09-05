@@ -27,7 +27,7 @@
         <input name="isRegistered" id="notRegistered" class="radio-inline" type="radio" value="false" [(ngModel)]="vehicle.isRegistered">No</label>
 
   <h2> Features </h2>
-  <div *ngFor="let f of features" class="checkbox">
+  <div *ngFor="let f of features" (change)="onFeatureToggle(f.id, $event)" class="checkbox">
     <label for="feature{{f.id}}">
       <input type="checkbox" id="feature{{f.id}}">{{f.name}}</label>
   </div>
